@@ -14,20 +14,30 @@ $(".text").on("click", function (e) {
   $(".pragraph").not($(this).next()).slideUp(500);
   $(this).next().slideToggle(500);
 });
+
 var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
 
-var x = setInterval(function () {
+function updateCountdown() {
   var now = new Date().getTime();
-
   var distance = countDownDate - now;
 
   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  $("#days").html(`${days}`, "d");
-  $("#time").html(hours, "H");
-  $("#hours").html(minutes, "M");
-  $("#seconds").html(seconds, "S");
-}, 1000);
-x();
+
+  $("#days").html(`${days}d`);
+  $("#time").html(`${hours}H`);
+  $("#hours").html(`${minutes}M`);
+  $("#seconds").html(`${seconds}S`);
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+$("#textArea").on("keyup", function (e) {
+  var maxLength = 100;
+  var numchars = $(e.target).val().length;
+  var remainingChars = maxLength - numchars;
+  $("#chars").html(`${remainingChars}`);
+});
